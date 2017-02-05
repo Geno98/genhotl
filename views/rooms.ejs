@@ -31,9 +31,9 @@
                         <div class="tab-pane fade" id="criterios">
                         </div>
                         <div class="tab-pane fade in active" id="seleccion">
+                            <h4>Seleccione una de nuestras habitaciones disponibles:</h4>
                             <div class="row">
                                 <div class="container">
-                                    <h4>Seleccione una de nuestras habitaciones disponibles:</h4>
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
@@ -48,7 +48,6 @@
                                         </thead>
                                         <tbody>
                                             <% if (typeof habitaciones != "undefined") { %>
-
                                                 <% _.each(habitaciones, function (habitacion) { %>
                                                     <% if (habitacion.estado == 1) { %>
                                                         <tr>
@@ -62,22 +61,33 @@
                                                                 <%= habitacion.tipo %>
                                                             </td>
                                                             <td>
-                                                                <%= habitacion.desayuno %>
+                                                                <% if (habitacion.desayuno == 1) { %>
+                                                                Incluido
+                                                                <% } else { %>
+                                                                No Incluido
+                                                                <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= habitacion.wifi %>
+                                                                <% if (habitacion.wifi == 1) { %>
+                                                                Sí
+                                                                <% } else { %>
+                                                                No
+                                                                <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= habitacion.buena_vista %>
+                                                                <% if (habitacion.buena_vista == 1) { %>
+                                                                Sí
+                                                                <% } else { %>
+                                                                No
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= habitacion.precio %>
                                                             </td>
                                                         </tr>
-                                                        <% } %>
-                                                            <% }) %>
-
-                                                                <% } %>
+                                                    <% } %>
+                                                <% }) %>
+                                            <% } %>
                                         </tbody>
                                     </table>
                                 </div>
