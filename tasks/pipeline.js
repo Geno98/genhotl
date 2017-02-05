@@ -40,7 +40,8 @@ var jsFilesToInject = [
   'vendor/datatables/js/jquery.dataTables.min.js',
   'vendor/datatables-plugins/dataTables.bootstrap.min.js',
   'vendor/datatables-responsive/dataTables.responsive.js',
-  'js/sb-admin-2.js'
+  'js/sb-admin-2.js',
+  'js/extras.js'
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.

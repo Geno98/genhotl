@@ -37,6 +37,9 @@ module.exports.routes = {
   },
   '/FAQ': {
     view: 'faq'
+  },
+  '/Reservation': {
+    view: 'reservation'
   }
 
   /***************************************************************************
