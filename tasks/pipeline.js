@@ -17,7 +17,12 @@
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'styles/**/*.css'
+  '/vendor/bootstrap/css/bootstrap.min.css',
+  'vendor/metisMenu/metisMenu.min.css',
+  'vendor/datatables-plugins/dataTables.bootstrap.css',
+  'vendor/datatables-responsive/dataTables.responsive.css',
+  'styles/sb-admin-2.css',
+  'vendor/font-awesome/css/font-awesome.min.css'
 ];
 
 
@@ -29,11 +34,16 @@ var jsFilesToInject = [
   'js/dependencies/sails.io.js',
 
   // Dependencies like jQuery, or Angular are brought in here
-  'js/dependencies/**/*.js',
+  'vendor/jquery/jquery.min.js',
+  'vendor/bootstrap/js/bootstrap.min.js',
+  'vendor/metisMenu/metisMenu.min.js',
+  'vendor/datatables/js/jquery.dataTables.min.js',
+  'vendor/datatables-plugins/dataTables.bootstrap.min.js',
+  'vendor/datatables-responsive/dataTables.responsive.js',
+  'js/sb-admin-2.js'
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
-  'js/**/*.js'
 ];
 
 
@@ -62,26 +72,24 @@ var tmpPath = '.tmp/public/';
 // Prefix relative paths to source files so they point to the proper locations
 // (i.e. where the other Grunt tasks spit them out, or in some cases, where
 // they reside in the first place)
-module.exports.cssFilesToInject = cssFilesToInject.map(function(cssPath) {
-  // If we're ignoring the file, make sure the ! is at the beginning of the path
-  if (cssPath[0] === '!') {
-    return require('path').join('!.tmp/public/', cssPath.substr(1));
-  }
-  return require('path').join('.tmp/public/', cssPath);
+module.exports.cssFilesToInject = cssFilesToInject.map(function (cssPath) {
+    // If we're ignoring the file, make sure the ! is at the beginning of the path
+    if (cssPath[0] === '!') {
+        return require('path').join('!.tmp/public/', cssPath.substr(1));
+    }
+    return require('path').join('.tmp/public/', cssPath);
 });
-module.exports.jsFilesToInject = jsFilesToInject.map(function(jsPath) {
-  // If we're ignoring the file, make sure the ! is at the beginning of the path
-  if (jsPath[0] === '!') {
-    return require('path').join('!.tmp/public/', jsPath.substr(1));
-  }
-  return require('path').join('.tmp/public/', jsPath);
+module.exports.jsFilesToInject = jsFilesToInject.map(function (jsPath) {
+    // If we're ignoring the file, make sure the ! is at the beginning of the path
+    if (jsPath[0] === '!') {
+        return require('path').join('!.tmp/public/', jsPath.substr(1));
+    }
+    return require('path').join('.tmp/public/', jsPath);
 });
-module.exports.templateFilesToInject = templateFilesToInject.map(function(tplPath) {
-  // If we're ignoring the file, make sure the ! is at the beginning of the path
-  if (tplPath[0] === '!') {
-    return require('path').join('!assets/', tplPath.substr(1));
-  }
-  return require('path').join('assets/',tplPath);
+module.exports.templateFilesToInject = templateFilesToInject.map(function (tplPath) {
+    // If we're ignoring the file, make sure the ! is at the beginning of the path
+    if (tplPath[0] === '!') {
+        return require('path').join('!assets/', tplPath.substr(1));
+    }
+    return require('path').join('assets/', tplPath);
 });
-
-
