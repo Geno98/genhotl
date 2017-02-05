@@ -48,32 +48,36 @@
                                         </thead>
                                         <tbody>
                                             <% if (typeof habitaciones != "undefined") { %>
-                                                <tr>
-                                                    <% _.each(habitaciones, function (habitacion) { %>
-                                                        <td>
-                                                            <%= habitacion.id %>
-                                                        </td>
-                                                        <td>
-                                                            <%= habitacion.piso %>
-                                                        </td>
-                                                        <td>
-                                                            <%= habitacion.tipo %>
-                                                        </td>
-                                                        <td>
-                                                            <%= habitacion.desayuno %>
-                                                        </td>
-                                                        <td>
-                                                            <%= habitacion.wifi %>
-                                                        </td>
-                                                        <td>
-                                                            <%= habitacion.buena_vista %>
-                                                        </td>
-                                                        <td>
-                                                            <%= habitacion.precio %>
-                                                        </td>                                                        
-                                                        <% }) %>
-                                                </tr>
-                                                <% } %>
+
+                                                <% _.each(habitaciones, function (habitacion) { %>
+                                                    <% if (habitacion.estado == 1) { %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= habitacion.id %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.piso %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.tipo %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.desayuno %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.wifi %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.buena_vista %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.precio %>
+                                                            </td>
+                                                        </tr>
+                                                        <% } %>
+                                                            <% }) %>
+
+                                                                <% } %>
                                         </tbody>
                                     </table>
                                 </div>
