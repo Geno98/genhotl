@@ -1,0 +1,113 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Realizar Reservación</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Reservación
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-pills">
+                        <li class="disabled"><a href="#criterios" data-toggle="tab">Criterios de Búsqueda</a>
+                        </li>
+                        <li class="active"><a href="#seleccion" data-toggle="tab">Seleccionar Habitación</a>
+                        </li>
+                        <li class="disabled"><a href="#datos" data-toggle="tab">Ingresar Datos</a>
+                        </li>
+                        <li class="disabled"><a href="#registrar" data-toggle="tab">Registrar Reservación</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="criterios">
+                        </div>
+                        <div class="tab-pane fade in active" id="seleccion">
+                            <h4>Seleccione una de nuestras habitaciones disponibles:</h4>
+                            <div class="row">
+                                <div class="container">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Número</th>
+                                                <th>Piso</th>
+                                                <th>Tipo</th>
+                                                <th>Desayuno</th>
+                                                <th>WiFi</th>
+                                                <th>Buena Vista</th>
+                                                <th>Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if (typeof habitaciones != "undefined") { %>
+                                                <% _.each(habitaciones, function (habitacion) { %>
+                                                    <% if (habitacion.estado == 1) { %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= habitacion.id %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.piso %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.tipo %>
+                                                            </td>
+                                                            <td>
+                                                                <% if (habitacion.desayuno == 1) { %>
+                                                                Incluido
+                                                                <% } else { %>
+                                                                No Incluido
+                                                                <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <% if (habitacion.wifi == 1) { %>
+                                                                Sí
+                                                                <% } else { %>
+                                                                No
+                                                                <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <% if (habitacion.buena_vista == 1) { %>
+                                                                Sí
+                                                                <% } else { %>
+                                                                No
+                                                                <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <%= habitacion.precio %>
+                                                            </td>
+                                                        </tr>
+                                                    <% } %>
+                                                <% }) %>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="datos">
+                                <h4>Messages Tab</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                            <div class="tab-pane fade" id="registrar">
+                                <h4>Settings Tab</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-6 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
