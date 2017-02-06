@@ -9,7 +9,7 @@ module.exports = {
     autoCreatedAt: false,
     autoUpdatedAt: false,
     connection: 'herokuPostgreSQL',
-    tableName: 'cliente',
+    tableName: 'clientes',
     attributes: {
         id_cliente: {
             type: 'integer',
@@ -17,11 +17,11 @@ module.exports = {
             primaryKey: true,
             autoIncrement: true
         },
-        nombre: 'string',
-        apellido: 'string',
-        cedulaPasaporte: 'string',
+        nombres: 'string',
+        apellidos: 'string',
+        cedula: 'string',
         email: 'string',
         direccion: 'string',
-        telefono: 'integer'
+        telefono: 'string'
     }
 };
