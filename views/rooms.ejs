@@ -28,12 +28,13 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        
+
                         <div class="tab-pane fade in active" id="seleccion">
                             <h4>Seleccione una de nuestras habitaciones disponibles:</h4>
-                            <div class="row">
-                                <div class="container">
-                                    
+                            <div class="centerTable">
+                                <div class="row">
+                                    <div class="centerTable">
+
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
@@ -44,6 +45,7 @@
                                                     <th>WiFi</th>
                                                     <th>Buena Vista</th>
                                                     <th>Precio</th>
+                                                    <th>Seleccionar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -84,37 +86,49 @@
                                                                 <td>
                                                                     <%= habitacion.precio %>
                                                                 </td>
+                                                                <td>
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" value="">
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
                                                             </tr>
+
                                                             <% } %>
                                                                 <% }) %>
                                                                     <% } %>
+
+
                                             </tbody>
                                         </table>
-                                        
-                                    <form action="/datosCliente" method="GET">
-                                    
-                                        <button type="submit" class="btn btn-default">Siguiente</button>
-                                        <button type="reset" class="btn btn-default">Atrás</button>
-                                        
-                                    </form>
+
+                                        <form action="/datosCliente" method="GET">
+
+                                            <button type="submit" class="btn btn-default">Siguiente</button>
+                                            <button type="reset" class="btn btn-default">Atrás</button>
+
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="datos">
-                                <h4>Messages Tab</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            </div>
-                            <div class="tab-pane fade" id="registrar">
-                                <h4>Settings Tab</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="datos">
+                            <h4>Messages Tab</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                        <div class="tab-pane fade" id="registrar">
+                            <h4>Settings Tab</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                     </div>
-                    <!-- /.panel-body -->
                 </div>
-                <!-- /.panel -->
+                <!-- /.panel-body -->
             </div>
-            <!-- /.col-lg-6 -->
+            <!-- /.panel -->
         </div>
-        <!-- /.row -->
+        <!-- /.col-lg-6 -->
     </div>
-    <!-- /#page-wrapper -->
+    <!-- /.row -->
+</div>
+<!-- /#page-wrapper -->
