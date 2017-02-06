@@ -41,6 +41,9 @@ module.exports.routes = {
   '/Reservation': {
     view: 'reservation'
   },
+  '/Reservation/Rooms': {
+    view: 'rooms'  
+  },
   '/datosCliente': {
     view: 'datosCliente'
   }
