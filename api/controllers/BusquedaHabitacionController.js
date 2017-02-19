@@ -8,7 +8,7 @@
 module.exports = {
     register: function (req, res) {
         //console.log(req.param('roomType'));
-        if (req.method == 'GET') {
+        if (req.method == 'POST') {
             Habitacion.find({
                 precio: {
                     '>=': req.param('minPrice')
@@ -21,8 +21,17 @@ module.exports = {
                 if (err) {
                     return res.serverError(err);
                 }
-                return res.view('rooms', {
+                
+                /*return res.view('rooms', {
                     habitaciones: habitaciones
+                });*/
+                
+                return res.view('reservation', {
+                  pclassS: 'active',
+                  pclassC: 'disabled',
+                  tclassS: 'in active',
+                  tclassC: ' ',
+                  habitaciones: habitaciones
                 });
             });
         }
