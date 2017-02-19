@@ -11,7 +11,7 @@ module.exports = {
   connection: 'herokuPostgreSQL',
   tableName: 'habitacion',
   attributes: {
-    id: {
+    id_habitacion: {
       type: 'integer',
       columnName: 'id_habitacion',
       primaryKey: true,
@@ -20,7 +20,6 @@ module.exports = {
     precio: 'float',
     tipo: 'string',
     piso: 'integer',
-    estado: 'integer',
     desayuno: 'integer',
     wifi: 'integer',
     buena_vista: 'integer'
