@@ -1,4 +1,30 @@
+var arrayHabs = [];
+
+function obtenerID(x) {
+    var row = x.parentElement.parentElement.parentElement.parentElement.rowIndex;
+    var id = document.getElementById("conjHab").rows[row].cells[0].innerHTML;
+
+    if (x.checked) {
+        arrayHabs.push(id.trim());
+    } else {
+        arrayHabs.splice(arrayHabs.indexOf(id), 1);
+    }
+    
+    console.log(arrayHabs);
+    
+    console.log(arrayHabs.length);
+    if (arrayHabs.length == 0) {
+        $('#nextStep').prop("disabled", true);
+    } else {
+        $('#nextStep').prop("disabled", false);
+    }
+
+    //document.getElementById("hab").setAttribute('value', id.trim());
+}
+
 $(document).ready(function (e) {
+
+
 
     var oTable = $('#conjHab').DataTable({
         columns: [
@@ -85,16 +111,68 @@ $(document).ready(function (e) {
                             wifi: wifi,
                             buena_vista: buena_vista,
                             precio: item.precio,
-                            seleccionar: '<div class="checkbox"><label><input type="checkbox" value=""></label></div>'
+                            seleccionar: '<div class="checkbox"><label><input type="checkbox" onclick="obtenerID(this);"></label></div>'
                         }
 
                         oTable.row.add(final).draw();
                     });
                 } else {
-                    oTable.clear();
+                    oTable.clear().draw();
+                    $('#nextStep').prop("disabled", true);
                 }
             }
         });
+    });
+
+
+
+    var dTable = $('#conjDat').DataTable({
+        columns: [
+            {
+                data: "nombres"
+            },
+            {
+                data: "apellidos"
+            },
+            {
+                data: "cedula"
+            },
+            {
+                data: "email"
+            },
+            {
+                data: "direccion"
+            },
+            {
+                data: "telefono"
+            }
+  ],
+        "columnDefs": [
+            {
+                "className": "dt-center",
+                "targets": "_all"
+            }
+      ],
+    });
+
+    $('#cargarCli').click(function (e) {
+        e.preventDefault();
+
+        var cliente = {
+            nombres: document.forms['DatPers']['nombres'].value,
+            apellidos: document.forms['DatPers']['apellidos'].value,
+            cedula: document.forms['DatPers']['cedula'].value,
+            email: document.forms['DatPers']['email'].value,
+            direccion: document.forms['DatPers']['direccion'].value,
+            telefono: document.forms['DatPers']['telefono'].value,
+        }
+
+        dTable.row.add(cliente).draw();
+        $('#limpiarCli').click();
+
+        if (dTable.data().count()) {
+            $('#nextStep').prop("disabled", false);
+        }
     });
 
 });

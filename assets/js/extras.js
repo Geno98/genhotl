@@ -4,13 +4,6 @@ $('a[data-toggle="tab"]').on('click', function () {
     }
 });
 
-function obtenerID(x) {
-    var row = x.parentElement.parentElement.parentElement.parentElement.rowIndex;
-    var id = document.getElementById("conjHab").rows[row].cells[0].innerHTML;
-
-    document.getElementById("hab").setAttribute('value', id.trim());
-}
-
 function alphaOnly(event) {
     var key = event.keyCode;
     return ((key >= 65 && key <= 90) || key == 8 || key == 32);
@@ -48,3 +41,15 @@ function disablePeople() {
         document.getElementById("people").setAttribute("value", "0");
     }
 }
+
+$('#nextStep').click(function (e) {
+    //e.preventDefault();
+
+    $('#tab_selec').removeClass('active');
+    $('#tab_datos').removeClass('disabled');
+    $('#tab_selec').addClass('disabled');
+    $('#tab_datos').addClass('active');
+
+    $('#seleccion').removeClass('in active');
+    $('#datos').addClass('in active');
+});
