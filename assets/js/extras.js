@@ -34,7 +34,8 @@ window.onload = function () {
     }
 
     today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("reservaF").setAttribute("min", today);
+    document.getElementById("ingreso").setAttribute("min", today);
+    document.getElementById("salida").setAttribute("min", today);
 }
 
 function enablePeople() {

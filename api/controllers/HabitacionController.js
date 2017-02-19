@@ -6,13 +6,13 @@
  */
 
 module.exports = {
-    buscar: function (req, res) {
+    Buscar: function (req, res) {
         //console.log(req.param('roomType'));
         if (req.method == 'POST') {
             params = req.allParams();
             sails.log.info(params);
 
-            sql = "select verHabitacionesDisponibles('" + params.fechaIngreso + "','" + params.fechaSalida + "','" + params.minPrice + "','" + params.maxPrice + "')";
+            sql = "select * from verHabitacionesDisponibles('" + params.fechaIngreso + "','" + params.fechaSalida + "','" + params.roomType + "','" + params.maxPrice + "')";
 
             Habitacion.query(sql, [], function (err, habitaciones) {
                 if (err) {
@@ -22,14 +22,9 @@ module.exports = {
                 /*return res.view('rooms', {
                     habitaciones: habitaciones
                 });*/
+                sails.log('Bien');
 
-                return res.view('reservation', {
-                    pclassS: 'active',
-                    pclassC: 'disabled',
-                    tclassS: 'in active',
-                    tclassC: ' ',
-                    habitaciones: habitaciones
-                });
+                return res.ok(habitaciones.rows);
             });
         }
     }
