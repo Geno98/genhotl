@@ -32,18 +32,12 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
-    '/': {
-        view: 'homepage'
-    },
-    '/FAQ': {
-        view: 'faq'
-    },
-    '/Reservation': {
-        view: 'reservation'
-    },
-    '/Consulta': {
-        view: 'consulta'
-    }
+
+  'get /': 'RutasController.Inicio',
+  'get /FAQ': 'RutasController.FAQ',
+  'get /Reservation': 'RutasController.Reservaciones',
+    'post /Reservation': 'RutasController.Reservaciones'
+
 
     /***************************************************************************
      *                                                                          *

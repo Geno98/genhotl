@@ -4,13 +4,6 @@ $('a[data-toggle="tab"]').on('click', function () {
     }
 });
 
-function obtenerID(x) {
-    var row = x.parentElement.parentElement.parentElement.parentElement.rowIndex;
-    var id = document.getElementById("conjHab").rows[row].cells[0].innerHTML;
-
-    document.getElementById("hab").setAttribute('value', id.trim());
-}
-
 function alphaOnly(event) {
     var key = event.keyCode;
     return ((key >= 65 && key <= 90) || key == 8 || key == 32);
@@ -34,16 +27,12 @@ window.onload = function () {
     }
 
     today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("reservaF").setAttribute("min", today);
+    document.getElementById("ingreso").setAttribute("min", today);
+    document.getElementById("salida").setAttribute("min", today);
 }
 
-function enablePeople() {
-    document.getElementById("people").removeAttribute("disabled");
-}
-
-function disablePeople() {
-    if (!document.getElementById("people").hasAttribute("disabled")) {
-        document.getElementById("people").setAttribute("disabled", "true");
-        document.getElementById("people").setAttribute("value", "0");
-    }
+function outLimit() {
+    var limit = document.getElementById("ingreso").value;
+    document.getElementById("salida").valueAsDate = null;
+    document.getElementById("salida").setAttribute("min", limit);
 }
