@@ -155,6 +155,61 @@ var rTableFinal = $('#conjResFinal').DataTable({
       ],
 });
 
+var detOTableFinal = $('#detHabFinal').DataTable({
+    columns: [
+        {
+            data: "id_habitacion"
+            },
+        {
+            data: "piso"
+            },
+        {
+            data: "tipo"
+            },
+        {
+            data: "desayuno"
+            },
+        {
+            data: "wifi"
+            },
+        {
+            data: "buena_vista"
+            },
+        {
+            data: "precio"
+            }
+  ],
+    "columnDefs": [
+        {
+            "className": "dt-center",
+            "targets": "_all"
+            }
+      ],
+});
+
+var detRTableFinal = $('#detResFinal').DataTable({
+    columns: [
+        {
+            data: "fecha_ingreso"
+            },
+        {
+            data: "fecha_salida"
+            },
+        {
+            data: "num_tarjeta"
+            },
+        {
+            data: "hab_reservada"
+            }
+  ],
+    "columnDefs": [
+        {
+            "className": "dt-center",
+            "targets": "_all"
+            }
+      ],
+});
+
 var arrayHabs = [];
 
 function obtenerID(x) {
@@ -261,9 +316,14 @@ var validateCardNo = function (no) {
         no.length == 13 && no[0] == 4)
 }
 
+function ValidateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+        return (true);
+    }
+    return (false);
+}
+
 $(document).ready(function (e) {
-
-
 
     $('#buscarHab').click(function (e) {
         e.preventDefault();
@@ -347,6 +407,8 @@ $(document).ready(function (e) {
             alert('Debe llenar todos los campos.');
         } else if (!check_cedula(document.forms['DatPers']['cedula'].value)) {
             alert('La cédula no es válida.');
+        } else if (!ValidateEmail(document.forms['DatPers']['email'].value)) {
+            alert('El email no es válido.');
         } else {
             var cliente = {
                 habitacion: document.forms['DatPers']['room'].value,
@@ -376,6 +438,8 @@ $(document).ready(function (e) {
             alert('Debe llenar todos los campos.');
         } else if (!check_cedula(document.forms['DatPers']['cedula'].value)) {
             alert('La cédula no es válida.');
+        } else if (!ValidateEmail(document.forms['DatPers']['email'].value)) {
+            alert('El email no es válido.');
         } else {
             var cliente = {
                 habitacion: document.forms['DatPers']['room'].value,
@@ -569,5 +633,115 @@ $(document).ready(function (e) {
                 }
             }
         });
+    });
+
+    $('#buscarRes').click(function (e) {
+        e.preventDefault();
+
+        if (document.forms['DetSearch']['cedula'].value == '') {
+            alert('Debe ingresar una cédula')
+        } else if (!check_cedula(document.forms['DetSearch']['cedula'].value)) {
+            alert('La cédula no es válida.');
+        } else {
+            $.ajax({
+                url: '/Clientes/BuscarCliente/',
+                type: "post",
+                data: {
+                    cedula: document.forms['DetSearch']['cedula'].value
+                },
+                error: function (msg) {
+                    alert(msg);
+                    console.log(msg);
+                    return msg;
+                },
+                success: function (data, textStatus, jqXHR) {
+                    detOTableFinal.clear();
+                    detRTableFinal.clear();
+                    console.log(data);
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            console.log(item);
+                            $.ajax({
+                                url: '/Habitacion/Seleccionadas/',
+                                type: "post",
+                                data: {
+                                    id_habitacion: item.id_habitacion
+                                },
+                                error: function (msg) {
+                                    alert(msg);
+                                    console.log(msg);
+                                    return msg;
+                                },
+                                success: function (data, textStatus, jqXHR) {
+                                    if (data) {
+                                        var desayuno;
+                                        var wifi;
+                                        var buena_vista;
+
+                                        if (data.desayuno == 1) {
+                                            desayuno = 'Incluido';
+                                        } else {
+                                            desayuno = 'No incluido';
+                                        }
+
+                                        if (data.wifi == 1) {
+                                            wifi = 'Sí';
+                                        } else {
+                                            wifi = 'No';
+                                        }
+
+                                        if (data.buena_vista == 1) {
+                                            buena_vista = 'Sí';
+                                        } else {
+                                            buena_vista = 'No';
+                                        }
+
+                                        var final = {
+                                            id_habitacion: data.id_habitacion,
+                                            piso: data.piso,
+                                            tipo: data.tipo,
+                                            desayuno: desayuno,
+                                            wifi: wifi,
+                                            buena_vista: buena_vista,
+                                            precio: data.precio,
+                                        }
+                                        detOTableFinal.row.add(final).draw();
+                                    }
+                                }
+                            });
+
+                            $.ajax({
+                                url: '/Reservacion/BuscarReservacion/',
+                                type: "post",
+                                data: {
+                                    id_reservacion: item.id_reserva
+                                },
+                                error: function (msg) {
+                                    alert(msg);
+                                    console.log(msg);
+                                    return msg;
+                                },
+                                success: function (data, textStatus, jqXHR) {
+                                    if (data) {
+                                        var final = {
+                                            fecha_ingreso: data.fecha_ingreso.substr(0, 10),
+                                            fecha_salida: data.fecha_salida.substr(0, 10),
+                                            num_tarjeta: data.num_tarjeta,
+                                            hab_reservada: item.id_habitacion
+                                        }
+                                        detRTableFinal.row.add(final).draw();
+                                    }
+                                }
+                            });
+                        });
+
+                        $('#limpiarRes').click();
+                    } else {
+                        detOTableFinal.clear().draw();
+                        detRTableFinal.clear().draw();
+                    }
+                }
+            });
+        }
     });
 });
