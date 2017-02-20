@@ -20,6 +20,7 @@ var cssFilesToInject = [
   '/vendor/bootstrap/css/bootstrap.min.css',
   'vendor/metisMenu/metisMenu.min.css',
   'styles/jquery.dataTables.min.css',
+  'styles/jquery-ui.min.css',
   'styles/sb-admin-2.css',
   'vendor/font-awesome/css/font-awesome.min.css'
 ];
@@ -37,6 +38,7 @@ var jsFilesToInject = [
   'vendor/bootstrap/js/bootstrap.min.js',
   'vendor/metisMenu/metisMenu.min.js',
   'js/jquery.dataTables.min.js',
+  'js/jquery-ui.min.js',
   'js/sb-admin-2.js',
   'js/extras.js',
   'js/dynamic_table.js'
