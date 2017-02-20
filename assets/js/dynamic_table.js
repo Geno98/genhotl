@@ -323,13 +323,36 @@ function ValidateEmail(mail) {
     return (false);
 }
 
+function alert2(message, title, buttonText) {
+
+    buttonText = (buttonText == undefined) ? "Ok" : buttonText;
+    title = (title == undefined) ? "The page says:" : title;
+
+    var div = $('<div>');
+    div.html(message);
+    div.attr('title', title);
+    div.dialog({
+        autoOpen: true,
+        modal: true,
+        draggable: false,
+        resizable: false,
+        buttons: [{
+            text: buttonText,
+            click: function () {
+                $(this).dialog("close");
+                div.remove();
+            }
+        }]
+    });
+}
+
 $(document).ready(function (e) {
 
     $('#buscarHab').click(function (e) {
         e.preventDefault();
 
         if (document.forms['CritSearch']['maxPrice'].value == '' || document.forms['CritSearch']['fechaIngreso'].value == '' || document.forms['CritSearch']['fechaSalida'].value == '' || document.forms['CritSearch']['roomType'].value == '') {
-            alert('Debe llenar todos los campos')
+            alert2('Debe llenar todos los campos', 'Error', 'Ok');
         } else {
             var tipoH;
             if (document.forms['CritSearch']['roomType'].value == 'Cualquiera') {
@@ -404,11 +427,11 @@ $(document).ready(function (e) {
         e.preventDefault();
 
         if (document.forms['DatPers']['nombres'].value == '' || document.forms['DatPers']['apellidos'].value == '' || document.forms['DatPers']['cedula'].value == '' || document.forms['DatPers']['email'].value == '' || document.forms['DatPers']['direccion'].value == '' || document.forms['DatPers']['telefono'].value == '') {
-            alert('Debe llenar todos los campos.');
+            alert2('Debe llenar todos los campos.', 'Error', 'Ok');
         } else if (!check_cedula(document.forms['DatPers']['cedula'].value)) {
-            alert('La cédula no es válida.');
+            alert2('La cédula no es válida.', 'Error', 'Ok');
         } else if (!ValidateEmail(document.forms['DatPers']['email'].value)) {
-            alert('El email no es válido.');
+            alert2('El email no es válido.', 'Error', 'Ok');
         } else {
             var cliente = {
                 habitacion: document.forms['DatPers']['room'].value,
@@ -435,11 +458,11 @@ $(document).ready(function (e) {
         e.preventDefault();
 
         if (document.forms['DatPers']['nombres'].value == '' || document.forms['DatPers']['apellidos'].value == '' || document.forms['DatPers']['cedula'].value == '' || document.forms['DatPers']['email'].value == '' || document.forms['DatPers']['direccion'].value == '' || document.forms['DatPers']['telefono'].value == '') {
-            alert('Debe llenar todos los campos.');
+            alert2('Debe llenar todos los campos.', 'Error', 'Ok');
         } else if (!check_cedula(document.forms['DatPers']['cedula'].value)) {
-            alert('La cédula no es válida.');
+            alert2('La cédula no es válida.', 'Error', 'Ok');
         } else if (!ValidateEmail(document.forms['DatPers']['email'].value)) {
-            alert('El email no es válido.');
+            alert2('El email no es válido.', 'Error', 'Ok');
         } else {
             var cliente = {
                 habitacion: document.forms['DatPers']['room'].value,
@@ -474,9 +497,9 @@ $(document).ready(function (e) {
         e.preventDefault();
 
         if (document.forms['PagoCli']['num_tarjeta'].value == '') {
-            alert('Debe ingresar un número de tarjeta de crédito.');
+            alert2('Debe ingresar un número de tarjeta de crédito.', 'Error', 'Ok');
         } else if (!validateCardNo(document.forms['PagoCli']['num_tarjeta'].value)) {
-            alert('Su número de tarjeta de crédito no es válido.');
+            alert2('Su número de tarjeta de crédito no es válido.', 'Error', 'Ok');
         } else {
             $('#tab_datos').removeClass('active');
             $('#tab_registro').removeClass('disabled');
@@ -625,7 +648,7 @@ $(document).ready(function (e) {
                             },
                             success: function (data, textStatus, jqXHR) {
                                 if (data) {
-                                    alert('Reservación Registrada Exitosamente');
+                                    alert2('Reservación Registrada Exitosamente', 'Éxito', 'Ok');
                                 }
                             }
                         });
@@ -639,9 +662,9 @@ $(document).ready(function (e) {
         e.preventDefault();
 
         if (document.forms['DetSearch']['cedula'].value == '') {
-            alert('Debe ingresar una cédula')
+            alert2('Debe ingresar una cédula', 'Error', 'Ok')
         } else if (!check_cedula(document.forms['DetSearch']['cedula'].value)) {
-            alert('La cédula no es válida.');
+            alert2('La cédula no es válida.', 'Error', 'Ok');
         } else {
             $.ajax({
                 url: '/Clientes/BuscarCliente/',
