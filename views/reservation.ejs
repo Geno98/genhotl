@@ -33,18 +33,38 @@
                             <div class="row">
                                 <div class="col-lg-3"></div>
                                 <div class="col-lg-6">
-                                    <form action="/busquedahabitacion/register" method="POST" autocomplete="off">
+                                    <form action="/habitacion/buscar" method="POST" autocomplete="off">
+                                        <div class="form-group">
+                                            <% var today = new Date();
+                                            var dd = today.getDate();
+                                            var mm = today.getMonth()+1;
+                                            var yyyy = today.getFullYear();
+                                             if(dd<10){
+                                                    dd='0'+dd
+                                                } 
+                                                if(mm<10){
+                                                    mm='0'+mm
+                                                } 
+                                            today = yyyy+'-'+mm+'-'+dd; %>                                            
+                                            <label>Fecha de ingreso</label>
+                                            <input class="form-control" type="date" required name="fechaIngreso" min="<%= today %>" value="<%= today %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Fecha de salida</label>
+                                            <input class="form-control" type="date" required name="fechaSalida" min="<%= today %>" value="<%= today %>">
+                                        </div>
                                         <div class="form-group">
                                             <label>Precio Mínimo</label>
-                                            <input class="form-control" type="number" placeholder="Min" min="0" step="100" required onkeydown="return false;" name="minPrice">
+                                            <input class="form-control" type="number" value="0" min="0" name="minPrice">
                                         </div>
                                         <div class="form-group">
                                             <label>Precio Máximo</label>
-                                            <input class="form-control" type="number" placeholder="Max" min="100" step="100" required onkeydown="return false;" name="maxPrice">
+                                            <input class="form-control" type="number" value="99999" min="0" name="maxPrice">
                                         </div>
                                         <div class="form-group">
-                                            <label>Tipo Habitación</label>
+                                            <label>Tipo de Habitación</label>
                                             <select class="form-control" required name="roomType">
+                                                <option>Cualquiera</option>
                                                 <option>Simple</option>
                                                 <option>Doble</option>
                                                 <option>Triple</option>
@@ -214,6 +234,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="tab-pane fade <%=typeof tclassR == 'undefined' ? ' ' : tclassR%>" id="registrar">
                             <h4>Verifique los datos de la reservación</h4>
                             <div class="centerTable">
