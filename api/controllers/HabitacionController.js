@@ -22,6 +22,7 @@ module.exports = {
                 /*return res.view('rooms', {
                     habitaciones: habitaciones
                 });*/
+
                 //sails.log('Bien');
 
                 return res.ok(habitaciones.rows);
