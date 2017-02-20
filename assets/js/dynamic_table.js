@@ -581,7 +581,7 @@ $(document).ready(function (e) {
         }
         $('#roomSel').append(option);
     });
-    
+
     $('#atrasPago').click(function (e) {
         e.preventDefault();
 
@@ -596,9 +596,9 @@ $(document).ready(function (e) {
         $('#roomSel').empty();
         $('#limpiarCli').click();
         $('#limpiarPago').click();
-        
+
         dTable.clear().draw();
-        
+
     });
 
     $('#regRes').click(function (e) {
@@ -652,6 +652,22 @@ $(document).ready(function (e) {
                 }
             }
         });
+    });
+
+    $('#atrasRes').click(function (e) {
+        e.preventDefault();
+
+        $('#tab_registro').removeClass('active');
+        $('#tab_datos').removeClass('disabled');
+        $('#tab_registro').addClass('disabled');
+        $('#tab_datos').addClass('active');
+
+        $('#registrar').removeClass('in active');
+        $('#datos').addClass('in active');
+
+        oTableFinal.clear().draw();
+        dTableFinal.clear().draw();
+        rTableFinal.clear().draw();
     });
 
     $('#buscarRes').click(function (e) {
