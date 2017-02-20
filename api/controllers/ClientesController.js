@@ -12,6 +12,8 @@ module.exports = {
             //sails.log.info(params);
 
             Clientes.create({
+                id_reserva: params.id_reserva,
+                id_habitacion: params.id_habitacion,
                 nombres: params.nombres,
                 apellidos: params.apellidos,
                 cedula: params.cedula,

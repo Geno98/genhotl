@@ -36,6 +36,9 @@ var oTable = $('#conjHab').DataTable({
 var dTable = $('#conjDat').DataTable({
     columns: [
         {
+            data: "habitacion"
+            },
+        {
             data: "nombres"
             },
         {
@@ -102,6 +105,9 @@ var oTableFinal = $('#conjHabFinal').DataTable({
 
 var dTableFinal = $('#conjDatFinal').DataTable({
     columns: [
+        {
+            data: "habitacion"
+            },
         {
             data: "nombres"
             },
@@ -175,12 +181,13 @@ function editarCliente(x) {
     var row = x.parentElement.parentElement.rowIndex;
     var table = document.getElementById("conjDat").rows[row];
 
-    $('#noms').attr('value', table.cells[0].innerHTML);
-    $('#apes').attr('value', table.cells[1].innerHTML);
-    $('#ced').attr('value', table.cells[2].innerHTML);
-    $('#mail').attr('value', table.cells[3].innerHTML);
-    $('#dir').attr('value', table.cells[4].innerHTML);
-    $('#tel').attr('value', table.cells[5].innerHTML);
+    $("#roomSel").val(table.cells[0].innerHTML);
+    $('#noms').attr('value', table.cells[1].innerHTML);
+    $('#apes').attr('value', table.cells[2].innerHTML);
+    $('#ced').attr('value', table.cells[3].innerHTML);
+    $('#mail').attr('value', table.cells[4].innerHTML);
+    $('#dir').attr('value', table.cells[5].innerHTML);
+    $('#tel').attr('value', table.cells[6].innerHTML);
     $('#id_cli').attr('value', row);
 
     $('#editarCliB').prop("disabled", false);
@@ -264,6 +271,13 @@ $(document).ready(function (e) {
         if (document.forms['CritSearch']['maxPrice'].value == '' || document.forms['CritSearch']['fechaIngreso'].value == '' || document.forms['CritSearch']['fechaSalida'].value == '' || document.forms['CritSearch']['roomType'].value == '') {
             alert('Debe llenar todos los campos')
         } else {
+            var tipoH;
+            if (document.forms['CritSearch']['roomType'].value == 'Cualquiera') {
+                tipoH = '';
+            } else {
+                tipoH = document.forms['CritSearch']['roomType'].value;
+            }
+
             $.ajax({
                 url: '/Habitacion/Buscar/',
                 type: "post",
@@ -271,7 +285,7 @@ $(document).ready(function (e) {
                     maxPrice: document.forms['CritSearch']['maxPrice'].value,
                     fechaIngreso: document.forms['CritSearch']['fechaIngreso'].value,
                     fechaSalida: document.forms['CritSearch']['fechaSalida'].value,
-                    roomType: document.forms['CritSearch']['roomType'].value
+                    roomType: tipoH
                 },
                 error: function (msg) {
                     alert(msg);
@@ -335,6 +349,7 @@ $(document).ready(function (e) {
             alert('La cédula no es válida.');
         } else {
             var cliente = {
+                habitacion: document.forms['DatPers']['room'].value,
                 nombres: document.forms['DatPers']['nombres'].value,
                 apellidos: document.forms['DatPers']['apellidos'].value,
                 cedula: document.forms['DatPers']['cedula'].value,
@@ -363,6 +378,7 @@ $(document).ready(function (e) {
             alert('La cédula no es válida.');
         } else {
             var cliente = {
+                habitacion: document.forms['DatPers']['room'].value,
                 nombres: document.forms['DatPers']['nombres'].value,
                 apellidos: document.forms['DatPers']['apellidos'].value,
                 cedula: document.forms['DatPers']['cedula'].value,
@@ -462,12 +478,13 @@ $(document).ready(function (e) {
             for (var i = 1; i <= dTable.data().count(); i++) {
                 var tableCli = document.getElementById("conjDat").rows[i];
                 var clienteFinal = {
-                    nombres: tableCli.cells[0].innerHTML,
-                    apellidos: tableCli.cells[1].innerHTML,
-                    cedula: tableCli.cells[2].innerHTML,
-                    email: tableCli.cells[3].innerHTML,
-                    direccion: tableCli.cells[4].innerHTML,
-                    telefono: tableCli.cells[5].innerHTML,
+                    habitacion: tableCli.cells[0].innerHTML,
+                    nombres: tableCli.cells[1].innerHTML,
+                    apellidos: tableCli.cells[2].innerHTML,
+                    cedula: tableCli.cells[3].innerHTML,
+                    email: tableCli.cells[4].innerHTML,
+                    direccion: tableCli.cells[5].innerHTML,
+                    telefono: tableCli.cells[6].innerHTML,
                 }
 
                 dTableFinal.row.add(clienteFinal).draw();
@@ -493,67 +510,64 @@ $(document).ready(function (e) {
 
         $('#seleccion').removeClass('in active');
         $('#datos').addClass('in active');
+
+        var option = '';
+        for (var i = 0; i < arrayHabs.length; i++) {
+            option += '<option value="' + arrayHabs[i] + '">' + arrayHabs[i] + '</option>';
+        }
+        $('#roomSel').append(option);
     });
 
     $('#regRes').click(function (e) {
         e.preventDefault();
 
-        for (var i = 1; i <= dTableFinal.data().count(); i++) {
-            var tableCli = document.getElementById("conjDatFinal").rows[i];
+        var tableRes = document.getElementById('conjResFinal').rows[1];
 
-            $.ajax({
-                url: '/Clientes/CrearCliente/',
-                type: "post",
-                data: {
-                    nombres: tableCli.cells[0].innerHTML,
-                    apellidos: tableCli.cells[1].innerHTML,
-                    cedula: tableCli.cells[2].innerHTML,
-                    email: tableCli.cells[3].innerHTML,
-                    direccion: tableCli.cells[4].innerHTML,
-                    telefono: tableCli.cells[5].innerHTML
-                },
-                error: function (msg) {
-                    alert(msg);
-                    console.log(msg);
-                    return msg;
-                },
-                success: function (data, textStatus, jqXHR) {
-                    if (data) {
-                        var desayuno;
-                        var wifi;
-                        var buena_vista;
+        $.ajax({
+            url: '/Reservacion/CrearReservacion/',
+            type: "post",
+            data: {
+                fecha_ingreso: tableRes.cells[0].innerHTML,
+                fecha_salida: tableRes.cells[1].innerHTML,
+                num_tarjeta: tableRes.cells[2].innerHTML
+            },
+            error: function (msg) {
+                alert(msg);
+                console.log(msg);
+                return msg;
+            },
+            success: function (data, textStatus, jqXHR) {
+                if (data) {
+                    for (var i = 1; i <= dTableFinal.data().count(); i++) {
+                        var tableCli = document.getElementById("conjDatFinal").rows[i];
 
-                        if (data.desayuno == 1) {
-                            desayuno = 'Incluido';
-                        } else {
-                            desayuno = 'No incluido';
-                        }
-
-                        if (data.wifi == 1) {
-                            wifi = 'Sí';
-                        } else {
-                            wifi = 'No';
-                        }
-
-                        if (data.buena_vista == 1) {
-                            buena_vista = 'Sí';
-                        } else {
-                            buena_vista = 'No';
-                        }
-
-                        var final = {
-                            id_habitacion: data.id_habitacion,
-                            piso: data.piso,
-                            tipo: data.tipo,
-                            desayuno: desayuno,
-                            wifi: wifi,
-                            buena_vista: buena_vista,
-                            precio: data.precio,
-                        }
-                        oTableFinal.row.add(final).draw();
+                        $.ajax({
+                            url: '/Clientes/CrearCliente/',
+                            type: "post",
+                            data: {
+                                id_reserva: data.id_reservacion,
+                                id_habitacion: tableCli.cells[0].innerHTML,
+                                nombres: tableCli.cells[1].innerHTML,
+                                apellidos: tableCli.cells[2].innerHTML,
+                                cedula: tableCli.cells[3].innerHTML,
+                                email: tableCli.cells[4].innerHTML,
+                                direccion: tableCli.cells[5].innerHTML,
+                                telefono: tableCli.cells[6].innerHTML
+                            },
+                            error: function (msg) {
+                                alert(msg);
+                                console.log(msg);
+                                return msg;
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                if (data) {
+                                    alert('Reservación Registrada Exitosamente');
+                                }
+                            }
+                        });
                     }
                 }
-            });
-        }
+            }
+        });
     });
 });
