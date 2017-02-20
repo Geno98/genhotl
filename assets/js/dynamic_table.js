@@ -582,6 +582,25 @@ $(document).ready(function (e) {
         $('#roomSel').append(option);
     });
 
+    $('#atrasPago').click(function (e) {
+        e.preventDefault();
+
+        $('#tab_datos').removeClass('active');
+        $('#tab_selec').removeClass('disabled');
+        $('#tab_datos').addClass('disabled');
+        $('#tab_selec').addClass('active');
+
+        $('#datos').removeClass('in active');
+        $('#seleccion').addClass('in active');
+
+        $('#roomSel').empty();
+        $('#limpiarCli').click();
+        $('#limpiarPago').click();
+
+        dTable.clear().draw();
+
+    });
+
     $('#regRes').click(function (e) {
         e.preventDefault();
 
@@ -633,6 +652,29 @@ $(document).ready(function (e) {
                 }
             }
         });
+    });
+
+    $('#atrasRes').click(function (e) {
+        e.preventDefault();
+
+        $('#tab_registro').removeClass('active');
+        $('#tab_datos').removeClass('disabled');
+        $('#tab_registro').addClass('disabled');
+        $('#tab_datos').addClass('active');
+
+        $('#registrar').removeClass('in active');
+        $('#datos').addClass('in active');
+
+        oTableFinal.clear().draw();
+        dTableFinal.clear().draw();
+        rTableFinal.clear().draw();
+    });
+    
+    $('#cancelarRes').click(function (e) {
+        e.preventDefault();
+
+        window.location.href='/Reservation';
+        return false;
     });
 
     $('#buscarRes').click(function (e) {
