@@ -31,25 +31,8 @@ window.onload = function () {
     document.getElementById("salida").setAttribute("min", today);
 }
 
-function enablePeople() {
-    document.getElementById("people").removeAttribute("disabled");
+function outLimit() {
+    var limit = document.getElementById("ingreso").value;
+    document.getElementById("salida").valueAsDate = null;
+    document.getElementById("salida").setAttribute("min", limit);
 }
-
-function disablePeople() {
-    if (!document.getElementById("people").hasAttribute("disabled")) {
-        document.getElementById("people").setAttribute("disabled", "true");
-        document.getElementById("people").setAttribute("value", "0");
-    }
-}
-
-$('#nextStep').click(function (e) {
-    //e.preventDefault();
-
-    $('#tab_selec').removeClass('active');
-    $('#tab_datos').removeClass('disabled');
-    $('#tab_selec').addClass('disabled');
-    $('#tab_datos').addClass('active');
-
-    $('#seleccion').removeClass('in active');
-    $('#datos').addClass('in active');
-});
