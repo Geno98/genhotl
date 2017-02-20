@@ -16,6 +16,10 @@ module.exports = {
     
     Reservaciones: function (req, res) {
         return res.view('reservation');
+    },
+    
+    Detalles: function (req, res) {
+        return res.view('details');
     }
 };
 

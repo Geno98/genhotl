@@ -36,7 +36,9 @@ module.exports.routes = {
   'get /': 'RutasController.Inicio',
   'get /FAQ': 'RutasController.FAQ',
   'get /Reservation': 'RutasController.Reservaciones',
-    'post /Reservation': 'RutasController.Reservaciones'
+  'post /Reservation': 'RutasController.Reservaciones',
+  'get /Details': 'RutasController.Detalles',
+  'post /Details': 'RutasController.Detalles'
 
 
     /***************************************************************************
