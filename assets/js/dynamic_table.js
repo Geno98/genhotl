@@ -669,6 +669,13 @@ $(document).ready(function (e) {
         dTableFinal.clear().draw();
         rTableFinal.clear().draw();
     });
+    
+    $('#cancelarRes').click(function (e) {
+        e.preventDefault();
+
+        window.location.href='/Reservation';
+        return false;
+    });
 
     $('#buscarRes').click(function (e) {
         e.preventDefault();
