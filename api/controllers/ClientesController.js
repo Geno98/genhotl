@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	CrearCliente: function (req, res) {
+    CrearCliente: function (req, res) {
         if (req.method == 'POST') {
             var params = req.allParams();
             //sails.log.info(params);
@@ -24,10 +24,26 @@ module.exports = {
                 if (err) {
                     return res.serverError(err);
                 }
-                
+
                 return res.ok(result);
             });
         }
+    },
+
+    BuscarCliente: function (req, res) {
+        if (req.method == 'POST') {
+            var params = req.allParams();
+            //sails.log.info(params);
+
+            Clientes.find({
+                cedula: params.cedula
+            }).exec(function (err, result) {
+                if (err) {
+                    return res.serverError(err);
+                }
+                
+                return res.ok(result);
+            })
+        }
     }
 };
-
