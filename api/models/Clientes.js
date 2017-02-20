@@ -17,6 +17,8 @@ module.exports = {
             primaryKey: true,
             autoIncrement: true
         },
+        id_reserva: 'integer',
+        id_habitacion: 'integer',
         nombres: 'string',
         apellidos: 'string',
         cedula: 'string',
