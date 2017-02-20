@@ -583,7 +583,7 @@ $(document).ready(function (e) {
     });
     
     $('#atrasPago').click(function (e) {
-        //e.preventDefault();
+        e.preventDefault();
 
         $('#tab_datos').removeClass('active');
         $('#tab_selec').removeClass('disabled');
