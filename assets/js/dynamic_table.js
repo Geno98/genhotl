@@ -581,6 +581,20 @@ $(document).ready(function (e) {
         }
         $('#roomSel').append(option);
     });
+    
+    $('#atrasPago').click(function (e) {
+        //e.preventDefault();
+
+        $('#tab_datos').removeClass('active');
+        $('#tab_selec').removeClass('disabled');
+        $('#tab_datos').addClass('disabled');
+        $('#tab_selec').addClass('active');
+
+        $('#datos').removeClass('in active');
+        $('#seleccion').addClass('in active');
+
+        $('#roomSel').empty();
+    });
 
     $('#regRes').click(function (e) {
         e.preventDefault();
