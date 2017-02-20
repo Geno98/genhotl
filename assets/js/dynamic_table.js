@@ -594,6 +594,11 @@ $(document).ready(function (e) {
         $('#seleccion').addClass('in active');
 
         $('#roomSel').empty();
+        $('#limpiarCli').click();
+        $('#limpiarPago').click();
+        
+        dTable.clear().draw();
+        
     });
 
     $('#regRes').click(function (e) {
