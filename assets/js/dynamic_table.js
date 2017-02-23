@@ -417,6 +417,7 @@ $(document).ready(function (e) {
                     } else {
                         oTable.clear().draw();
                         $('#nextStep').prop("disabled", true);
+                        alert2('No se encontraron habitaciones con esos criterios', 'Info', 'Ok');
                     }
                 }
             });
