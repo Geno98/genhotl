@@ -243,12 +243,15 @@ function editarCliente(x) {
     $('#mail').attr('value', table.cells[4].innerHTML);
     $('#dir').attr('value', table.cells[5].innerHTML);
     $('#tel').attr('value', table.cells[6].innerHTML);
-    $('#id_cli').attr('value', row);
 
     $('#editarCliB').prop("disabled", false);
     $('#cargarCli').prop("disabled", true);
     $('#limpiarCli').prop("disabled", true);
 }
+
+$('#conjDat tbody').on( 'click', 'tr', function () {
+    $('#id_cli').attr('value', dTable.row(this).index());
+} );
 
 function eliminarCliente(x) {
     var rowE = x.parentElement.parentElement.rowIndex;
@@ -256,39 +259,6 @@ function eliminarCliente(x) {
 
     if (!dTable.data().count()) {
         $('#cargarPago').prop("disabled", true);
-    }
-}
-
-function check_cedula(cedula) {
-    var cedula = cedula;
-    array = cedula.split("");
-    num = array.length;
-    if (num == 10) {
-        total = 0;
-        digito = (array[9] * 1);
-        for (i = 0; i < (num - 1); i++) {
-            mult = 0;
-            if ((i % 2) != 0) {
-                total = total + (array[i] * 1);
-            } else {
-                mult = array[i] * 2;
-                if (mult > 9)
-                    total = total + (mult - 9);
-                else
-                    total = total + mult;
-            }
-        }
-        decena = total / 10;
-        decena = Math.floor(decena);
-        decena = (decena + 1) * 10;
-        final = (decena - total);
-        if ((final == 10 && digito == 0) || (final == digito)) {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return false;
     }
 }
 
@@ -429,8 +399,6 @@ $(document).ready(function (e) {
 
         if (document.forms['DatPers']['nombres'].value == '' || document.forms['DatPers']['apellidos'].value == '' || document.forms['DatPers']['cedula'].value == '' || document.forms['DatPers']['email'].value == '' || document.forms['DatPers']['direccion'].value == '' || document.forms['DatPers']['telefono'].value == '') {
             alert2('Debe llenar todos los campos.', 'Error', 'Ok');
-        } else if (!check_cedula(document.forms['DatPers']['cedula'].value)) {
-            alert2('La cédula no es válida.', 'Error', 'Ok');
         } else if (!ValidateEmail(document.forms['DatPers']['email'].value)) {
             alert2('El email no es válido.', 'Error', 'Ok');
         } else {
@@ -460,8 +428,6 @@ $(document).ready(function (e) {
 
         if (document.forms['DatPers']['nombres'].value == '' || document.forms['DatPers']['apellidos'].value == '' || document.forms['DatPers']['cedula'].value == '' || document.forms['DatPers']['email'].value == '' || document.forms['DatPers']['direccion'].value == '' || document.forms['DatPers']['telefono'].value == '') {
             alert2('Debe llenar todos los campos.', 'Error', 'Ok');
-        } else if (!check_cedula(document.forms['DatPers']['cedula'].value)) {
-            alert2('La cédula no es válida.', 'Error', 'Ok');
         } else if (!ValidateEmail(document.forms['DatPers']['email'].value)) {
             alert2('El email no es válido.', 'Error', 'Ok');
         } else {
@@ -477,7 +443,7 @@ $(document).ready(function (e) {
                 eliminar: '<button class="btn btn-danger btn-xs" id="eliminarCli" onclick="eliminarCliente(this);">Eliminar</button>'
             }
 
-            dTable.row(document.forms['DatPers']['id_cliente'].value - 1).data(cliente).draw();
+            dTable.row(document.forms['DatPers']['id_cliente'].value).data(cliente).draw();
             $('#editarCliB').prop("disabled", true);
             $('#cargarCli').prop("disabled", false);
             $('#limpiarCli').prop("disabled", false);
