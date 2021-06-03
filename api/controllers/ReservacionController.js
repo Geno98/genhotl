@@ -1,25 +1,20 @@
 /**
- * ClienteController
+ * ReservacionController
  *
- * @description :: Server-side logic for managing Clientes
+ * @description :: Server-side logic for managing Reservacions
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
-    CrearCliente: function (req, res) {
+    CrearReservacion: function (req, res) {
         if (req.method == 'POST') {
             var params = req.allParams();
             //sails.log.info(params);
 
-            Clientes.create({
-                id_reserva: params.id_reserva,
-                id_habitacion: params.id_habitacion,
-                nombres: params.nombres,
-                apellidos: params.apellidos,
-                cedula: params.cedula,
-                email: params.email,
-                direccion: params.direccion,
-                telefono: params.telefono
+            Reservacion.create({
+                fecha_ingreso: params.fecha_ingreso,
+                fecha_salida: params.fecha_salida,
+                num_tarjeta: params.num_tarjeta
             }).exec(function (err, result) {
                 if (err) {
                     return res.serverError(err);
@@ -30,20 +25,20 @@ module.exports = {
         }
     },
 
-    BuscarCliente: function (req, res) {
+    BuscarReservacion: function (req, res) {
         if (req.method == 'POST') {
             var params = req.allParams();
             //sails.log.info(params);
 
-            Clientes.find({
-                cedula: params.cedula
+            Reservacion.findOne({
+                id_reservacion: params.id_reservacion
             }).exec(function (err, result) {
                 if (err) {
                     return res.serverError(err);
                 }
-                
+
                 return res.ok(result);
-            })
+            });
         }
     }
-};
+}

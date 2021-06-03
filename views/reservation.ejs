@@ -16,226 +16,231 @@
                 <div class="panel-body">
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills">
-                        <li class="<%=typeof pclassC == 'undefined' ? 'active' : pclassC%>"><a href="#criterios" data-toggle="tab">Criterios de Búsqueda</a>
+                        <li class="active" id="tab_selec"><a href="#seleccion" data-toggle="tab">Seleccionar Habitación</a>
                         </li>
-                        <li class="<%=typeof pclassS == 'undefined' ? 'disabled' : pclassS%>"><a href="#seleccion" data-toggle="tab">Seleccionar Habitación</a>
+                        <li class="disabled" id="tab_datos"><a href="#datos" data-toggle="tab">Ingresar Datos</a>
                         </li>
-                        <li class="<%=typeof pclassD == 'undefined' ? 'disabled' : pclassD%>"><a href="#datos" data-toggle="tab">Ingresar Datos</a>
-                        </li>
-                        <li class="<%=typeof pclassR == 'undefined' ? 'disabled' : pclassR%>"><a href="#registrar" data-toggle="tab">Registrar Reservación</a>
+                        <li class="disabled" id="tab_registro"><a href="#registrar" data-toggle="tab">Registrar Reservación</a>
                         </li>
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane fade <%=typeof tclassC == 'undefined' ? 'in active' : tclassC%>" id="criterios">
-                            <h4>Seleccione los criterios de búsqueda para su habitación</h4>
-                            <div class="row">
-                                <div class="col-lg-3"></div>
-                                <div class="col-lg-6">
-                                    <form action="/habitacion/buscar" method="POST" autocomplete="off">
-                                        <div class="form-group">
-                                            <% var today = new Date();
-                                            var dd = today.getDate();
-                                            var mm = today.getMonth()+1;
-                                            var yyyy = today.getFullYear();
-                                             if(dd<10){
-                                                    dd='0'+dd
-                                                } 
-                                                if(mm<10){
-                                                    mm='0'+mm
-                                                } 
-                                            today = yyyy+'-'+mm+'-'+dd; %>                                            
-                                            <label>Fecha de ingreso</label>
-                                            <input class="form-control" type="date" required name="fechaIngreso" min="<%= today %>" value="<%= today %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Fecha de salida</label>
-                                            <input class="form-control" type="date" required name="fechaSalida" min="<%= today %>" value="<%= today %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Precio Mínimo</label>
-                                            <input class="form-control" type="number" value="0" min="0" name="minPrice">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Precio Máximo</label>
-                                            <input class="form-control" type="number" value="99999" min="0" name="maxPrice">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tipo de Habitación</label>
-                                            <select class="form-control" required name="roomType">
-                                                <option>Cualquiera</option>
-                                                <option>Simple</option>
-                                                <option>Doble</option>
-                                                <option>Triple</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-default">Buscar Habitaciones</button>
-                                        <button type="reset" class="btn btn-default">Limpiar Campos</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade <%=typeof tclassS == 'undefined' ? ' ' : tclassS%>" id="seleccion">
-                            <h4>Seleccione una de nuestras habitaciones disponibles:</h4>
-                            <div class="centerTable">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                Habitaciones Disponibles
-                                            </div>
-                                            <!-- /.panel-heading -->
-                                            <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover" id="conjHab">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Número</th>
-                                                                <th>Piso</th>
-                                                                <th>Tipo</th>
-                                                                <th>Desayuno</th>
-                                                                <th>WiFi</th>
-                                                                <th>Buena Vista</th>
-                                                                <th>Precio</th>
-                                                                <th>Seleccionar</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <% if (typeof habitaciones != "undefined") { %>
-                                                                <% _.each(habitaciones, function (habitacion) { %>
-                                                                    <% if (habitacion.estado == 1) { %>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <%= habitacion.id %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%= habitacion.piso %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%= habitacion.tipo %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <% if (habitacion.desayuno == 1) { %>
-                                                                                    Incluido
-                                                                                    <% } else { %>
-                                                                                        No Incluido
-                                                                                        <% } %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <% if (habitacion.wifi == 1) { %>
-                                                                                    Sí
-                                                                                    <% } else { %>
-                                                                                        No
-                                                                                        <% } %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <% if (habitacion.buena_vista == 1) { %>
-                                                                                    Sí
-                                                                                    <% } else { %>
-                                                                                        No
-                                                                                        <% } %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%= habitacion.precio %>
-                                                                            </td>
-                                                                            <td align="center">
-                                                                                <div class="checkbox">
-                                                                                    <label>
-                                                                                        <input type="checkbox" value="" onclick="obtenerID(this);">
-                                                                                    </label>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <% } %>
-                                                                            <% }) %>
-                                                                                <% } %>
-                                                        </tbody>
-                                                    </table>
-
+                        <div class="tab-pane fade in active" id="seleccion">
+                            <br>
+                            <h5>Seleccione los criterios de búsqueda para su habitación:</h5>
+                            <nav class="navbar navbar-default">
+                                <div class="container-fluid">
+                                    <div class="collapse navbar-collapse">
+                                        <form class="navbar-form navbar-left" action="" autocomplete="off" name="CritSearch">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>Fecha de Ingreso</label>
+                                                            <input class="form-control" type="date" required name="fechaIngreso" min="" value="" style="min-width:100%;" id="ingreso" onchange="outLimit();" onload="setMinToday();">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>Fecha de Salida</label>
+                                                            <input class="form-control" type="date" required name="fechaSalida" min="" value="" style="min-width:100%;" id="salida" onload="setMinToday();">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>Precio Máximo</label>
+                                                            <input class="form-control" required type="number" min="100" step="100" name="maxPrice" style="min-width:100%;" onkeydown="return false;">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label>Tipo de Habitación</label>
+                                                            <select class="form-control" required name="roomType" style="min-width:100%;">
+                                                                <option>Cualquiera</option>
+                                                                <option>Simple</option>
+                                                                <option>Doble</option>
+                                                                <option>Triple</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <!-- /.table-responsive -->
                                             </div>
-                                            <!-- /.panel-body -->
-                                        </div>
-                                        <!-- /.panel -->
+                                            <div class="container">
+                                                <button class="btn btn-default navbar-btn" id="buscarHab" formmethod="post">Buscar Habitaciones</button>
+                                                <button type="reset" class="btn btn-default navbar-btn">Limpiar Campos</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <!-- /.col-lg-6 -->
                                 </div>
-                                <!-- /.row -->
-                                <form action="/seleccionarhabitacion/register" method="POST">
-                                    <input type="hidden" id="hab" value="" name="id_hab">
-                                    <button type="submit" class="btn btn-default">Siguiente</button>
-                                </form>
+                            </nav>
+
+                            <div class="panel-body">
+                                <h5>Seleccione una de nuestras habitaciones disponibles:</h5>
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="conjHab">
+                                        <thead>
+                                            <tr>
+                                                <th>Número</th>
+                                                <th>Piso</th>
+                                                <th>Tipo</th>
+                                                <th>Desayuno</th>
+                                                <th>WiFi</th>
+                                                <th>Buena Vista</th>
+                                                <th>Precio</th>
+                                                <th>Seleccionar</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Número</th>
+                                                <th>Piso</th>
+                                                <th>Tipo</th>
+                                                <th>Desayuno</th>
+                                                <th>WiFi</th>
+                                                <th>Buena Vista</th>
+                                                <th>Precio</th>
+                                                <th>Seleccionar</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <button class="btn btn-info" id="nextStep" disabled="true">Ingresar Datos Personales</button>
+                        </div>
+
+                        <div class="tab-pane fade" id="datos">
+                            <h5>Ingrese sus datos personales y de la reservación</h5>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Datos Clientes
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form autocomplete="off" action="" name="DatPers">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label><i class="fa fa-asterisk fa-fw" style="color:red;"></i>Nombres</label>
+                                                            <input class="form-control" type="text" placeholder="Nombres" onkeydown="return alphaOnly(event);" name="nombres" id="noms" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label><i class="fa fa-asterisk fa-fw" style="color:red;"></i>Apellidos</label>
+                                                            <input class="form-control" type="text" placeholder="Apellidos" onkeydown="return alphaOnly(event);" name="apellidos" id="apes" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label><i class="fa fa-asterisk fa-fw" style="color:red;"></i>Cédula</label>
+                                                            <input class="form-control" type="text" placeholder="Cédula" maxlength="10" onkeydown="return numberOnly(event);" name="cedula" id="ced" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label><i class="fa fa-asterisk fa-fw" style="color:red;"></i>Email</label>
+                                                            <input class="form-control" type="email" placeholder="Email" name="email" id="mail" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label><i class="fa fa-asterisk fa-fw" style="color:red;"></i>Dirección</label>
+                                                            <input class="form-control" type="text" placeholder="Dirección" name="direccion" id="dir" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label><i class="fa fa-asterisk fa-fw" style="color:red;"></i>Teléfono</label>
+                                                            <input class="form-control" type="text" placeholder="Teléfono" maxlength="10" onkeydown="return numberOnly(event);" name="telefono" id="tel" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>Habitación</label>
+                                                            <select class="form-control" required name="room" id="roomSel" style="min-width:100%;">
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" id="id_cli" name="id_cliente">
+                                                <button class="btn btn-default" id="cargarCli" formmethod="post">Ingresar Cliente</button>
+                                                <button type="reset" class="btn btn-default" id="limpiarCli">Limpiar Campos</button>
+                                                <button class="btn btn-default" id="editarCliB" formmethod="post" disabled="true">Editar Cliente</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover" id="conjDat">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Habitación</th>
+                                                            <th>Nombres</th>
+                                                            <th>Apellidos</th>
+                                                            <th>Cédula</th>
+                                                            <th>Email</th>
+                                                            <th>Dirección</th>
+                                                            <th>Teléfono</th>
+                                                            <th>Editar</th>
+                                                            <th>Eliminar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Habitación</th>
+                                                            <th>Nombres</th>
+                                                            <th>Apellidos</th>
+                                                            <th>Cédula</th>
+                                                            <th>Email</th>
+                                                            <th>Dirección</th>
+                                                            <th>Teléfono</th>
+                                                            <th>Editar</th>
+                                                            <th>Eliminar</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Método de Pago
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form action="" name="PagoCli" autocomplete="off">
+                                                <div class="form-group">
+                                                    <label>Tarjeta de Crédito</label>
+                                                    <input class="form-control" type="text" placeholder="Tarjeta" maxlength="16" required onkeydown="return numberOnly(event);" name="num_tarjeta">
+                                                </div>
+                                                <button class="btn btn-info" id="cargarPago" formmethod="post" disabled>Registrar Datos</button>
+                                                <button type="reset" class="btn btn-default" id="limpiarPago">Limpiar Campo</button>
+                                                <button class="btn btn-danger" id="atrasPago">Regresar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
-                        <div class="tab-pane fade <%=typeof tclassD == 'undefined' ? ' ' : tclassD%>" id="datos">
-                            <h4>Ingrese sus datos personales y de la reservación</h4>
-                            <div class="row">
-                                <div class="col-lg-3"></div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Tipo de Reservación</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" id="individual" value="option1" checked onclick="disablePeople();">Individual
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" id="grupal" value="option2" onclick="enablePeople();">Grupal
-                                        </label>
-                                    </div>
-                                    <form action="/datosreserva/register" method="POST" autocomplete="off">
-                                        <div class="form-group">
-                                            <label>Nombres</label>
-                                            <input class="form-control" type="text" placeholder="Nombres" required onkeydown="return alphaOnly(event);" name="nombres">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Apellidos</label>
-                                            <input class="form-control" type="text" placeholder="Apellidos" required onkeydown="return alphaOnly(event);" name="apellidos">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Cédula</label>
-                                            <input class="form-control" type="text" placeholder="Cédula" maxlength="10" required onkeydown="return numberOnly(event);" name="cedula">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input class="form-control" type="email" placeholder="Email" required name="email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Dirección</label>
-                                            <input class="form-control" type="text" placeholder="Dirección" required name="direccion">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Teléfono</label>
-                                            <input class="form-control" type="text" placeholder="Teléfono" maxlength="10" required onkeydown="return numberOnly(event);" name="telefono">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Acompañantes</label>
-                                            <input class="form-control" type="number" placeholder="Acompañantes" min="1" max="5" required onkeydown="return false;" name="personas" id="people" disabled value="0">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Fecha Reserva</label>
-                                            <input class="form-control" type="date" placeholder="Reserva" min="1899-01-01" required onkeydown="return false;" onload="setToday();" name="fecha_reserva" id="reservaF">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Días Estadía</label>
-                                            <input class="form-control" type="number" placeholder="Días" min="0" required onkeydown="return false;" name="dias">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tarjeta de Crédito</label>
-                                            <input class="form-control" type="text" placeholder="Tarjeta" maxlength="16" required onkeydown="return numberOnly(event);" name="num_tarjeta">
-                                        </div>
-                                        <input type="hidden" name="id_habT" value="<%=typeof habT == 'undefined' ? '0' : habT%>">
-                                        <button type="submit" class="btn btn-default">Registrar Datos</button>
-                                        <button type="reset" class="btn btn-default">Limpiar Campos</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade <%=typeof tclassR == 'undefined' ? ' ' : tclassR%>" id="registrar">
-                            <h4>Verifique los datos de la reservación</h4>
+                        <div class="tab-pane fade" id="registrar">
+                            <h5>Verifique los datos de la reservación</h5>
                             <div class="centerTable">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -246,7 +251,7 @@
                                             <!-- /.panel-heading -->
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover" id="conjHab">
+                                                    <table class="table table-hover" id="conjHabFinal">
                                                         <thead>
                                                             <tr>
                                                                 <th>Número</th>
@@ -258,53 +263,19 @@
                                                                 <th>Precio</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <% if (typeof habitacionesF != "undefined") { %>
-                                                                <% _.each(habitacionesF, function (habitacion) { %>
-                                                                    <% if (habitacion.estado == 1) { %>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <%= habitacion.id %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%= habitacion.piso %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%= habitacion.tipo %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <% if (habitacion.desayuno == 1) { %>
-                                                                                    Incluido
-                                                                                    <% } else { %>
-                                                                                        No Incluido
-                                                                                        <% } %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <% if (habitacion.wifi == 1) { %>
-                                                                                    Sí
-                                                                                    <% } else { %>
-                                                                                        No
-                                                                                        <% } %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <% if (habitacion.buena_vista == 1) { %>
-                                                                                    Sí
-                                                                                    <% } else { %>
-                                                                                        No
-                                                                                        <% } %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%= habitacion.precio %>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <% } %>
-                                                                            <% }) %>
-                                                                                <% } %>
-                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Número</th>
+                                                                <th>Piso</th>
+                                                                <th>Tipo</th>
+                                                                <th>Desayuno</th>
+                                                                <th>WiFi</th>
+                                                                <th>Buena Vista</th>
+                                                                <th>Precio</th>
+                                                            </tr>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
-                                                <!-- /.table-responsive -->
                                             </div>
                                             <!-- /.panel-body -->
                                         </div>
@@ -323,9 +294,10 @@
                                             <!-- /.panel-heading -->
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover" id="conjHab">
+                                                    <table class="table table-hover" id="conjDatFinal">
                                                         <thead>
                                                             <tr>
+                                                                <th>Habitación</th>
                                                                 <th>Nombres</th>
                                                                 <th>Apellidos</th>
                                                                 <th>Cédula</th>
@@ -334,31 +306,19 @@
                                                                 <th>Teléfono</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tfoot>
                                                             <tr>
-                                                                <td>
-                                                                    <%= typeof nombres == 'undefined' ? ' ' : nombres %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= typeof apellidos == 'undefined' ? ' ' : apellidos %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= typeof cedula == 'undefined' ? ' ' : cedula %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= typeof email == 'undefined' ? ' ' : email %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= typeof direccion == 'undefined' ? ' ' : direccion %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= typeof telefono == 'undefined' ? ' ' : telefono %>
-                                                                </td>
+                                                                <th>Habitación</th>
+                                                                <th>Nombres</th>
+                                                                <th>Apellidos</th>
+                                                                <th>Cédula</th>
+                                                                <th>Email</th>
+                                                                <th>Dirección</th>
+                                                                <th>Teléfono</th>
                                                             </tr>
-                                                        </tbody>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
-                                                <!-- /.table-responsive -->
                                             </div>
                                             <!-- /.panel-body -->
                                         </div>
@@ -377,34 +337,23 @@
                                             <!-- /.panel-heading -->
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover" id="conjHab">
+                                                    <table class="table table-hover" id="conjResFinal">
                                                         <thead>
                                                             <tr>
-                                                                <th>Fecha Reserva</th>
-                                                                <th>Días Estadía</th>
-                                                                <th>Número Tarjeta</th>
-                                                                <th>Acompañantes</th>
+                                                                <th>Fecha Ingreso</th>
+                                                                <th>Fecha Salida</th>
+                                                                <th>Número de Tarjeta</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tfoot>
                                                             <tr>
-                                                                <td>
-                                                                    <%= typeof fecha_reserva == 'undefined' ? ' ' : fecha_reserva %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= typeof dias == 'undefined' ? ' ' : dias %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= typeof num_tarjeta == 'undefined' ? ' ' : num_tarjeta %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= typeof personas == 'undefined' ? '0' : personas %>
-                                                                </td>
+                                                                <th>Fecha Ingreso</th>
+                                                                <th>Fecha Salida</th>
+                                                                <th>Número de Tarjeta</th>
                                                             </tr>
-                                                        </tbody>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
-                                                <!-- /.table-responsive -->
                                             </div>
                                             <!-- /.panel-body -->
                                         </div>
@@ -414,9 +363,10 @@
                                 </div>
                                 <!-- /.row -->
 
-                                <form action="/seleccionarhabitacion/register" method="POST">
-                                    <input type="hidden" id="hab" value="" name="id_hab">
-                                    <button type="submit" class="btn btn-default">Registrar Reservación</button>
+                                <form action="" name="RegFinal">
+                                    <button class="btn btn-success" formmethod="post" id="regRes">Registrar Reservación</button>
+                                    <button class="btn btn-danger" id="atrasRes">Regresar</button>
+                                    <button class="btn btn-danger" id="cancelarRes">Cancelar</button>
                                 </form>
                             </div>
                         </div>
@@ -431,3 +381,23 @@
     <!-- /.row -->
 </div>
 <!-- /#page-wrapper -->
+
+
+<script>
+    window.onload = function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("ingreso").setAttribute("min", today);
+        document.getElementById("salida").setAttribute("min", today);
+    }
+</script>

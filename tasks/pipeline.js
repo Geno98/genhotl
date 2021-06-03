@@ -19,8 +19,8 @@
 var cssFilesToInject = [
   '/vendor/bootstrap/css/bootstrap.min.css',
   'vendor/metisMenu/metisMenu.min.css',
-  'vendor/datatables-plugins/dataTables.bootstrap.css',
-  'vendor/datatables-responsive/dataTables.responsive.css',
+  'styles/jquery.dataTables.min.css',
+  'styles/jquery-ui.min.css',
   'styles/sb-admin-2.css',
   'vendor/font-awesome/css/font-awesome.min.css'
 ];
@@ -37,11 +37,11 @@ var jsFilesToInject = [
   'vendor/jquery/jquery.min.js',
   'vendor/bootstrap/js/bootstrap.min.js',
   'vendor/metisMenu/metisMenu.min.js',
-  'vendor/datatables/js/jquery.dataTables.min.js',
-  'vendor/datatables-plugins/dataTables.bootstrap.min.js',
-  'vendor/datatables-responsive/dataTables.responsive.js',
+  'js/jquery.dataTables.min.js',
+  'js/jquery-ui.min.js',
   'js/sb-admin-2.js',
-  'js/extras.js'
+  'js/extras.js',
+  'js/dynamic_table.js'
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
